@@ -558,7 +558,6 @@ class TestTokenizer:
         multiprocessing_with_parallelism(tokenizer, True)
 
     def test_multithreaded_concurrency(self):
-
         # Thread worker functions
         def encode_batch(batch):
             tokenizer = Tokenizer(BPE())
