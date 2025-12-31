@@ -585,7 +585,7 @@ class TestTokenizer:
 
         futures = []
         for task in tasks:
-            futures.append(executor.submit(*task))
+            futures.append(executor.submit(task[0], task[1]))
 
         # All tasks should complete successfully
         results = [f.result() for f in futures]
