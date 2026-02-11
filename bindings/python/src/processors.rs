@@ -29,7 +29,8 @@ use tokenizers as tk;
     dict,
     module = "tokenizers.processors",
     name = "PostProcessor",
-    subclass
+    subclass,
+    from_py_object
 )]
 #[derive(Clone, Deserialize, Serialize)]
 #[serde(transparent)]
@@ -818,7 +819,7 @@ impl PySequence {
 }
 
 /// Processors Module
-#[pymodule(gil_used = false)]
+#[pymodule]
 pub mod processors {
     #[pymodule_export]
     pub use super::PyBertProcessing;

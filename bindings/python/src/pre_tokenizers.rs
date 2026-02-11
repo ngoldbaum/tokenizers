@@ -34,7 +34,8 @@ use super::utils::*;
     dict,
     module = "tokenizers.pre_tokenizers",
     name = "PreTokenizer",
-    subclass
+    subclass,
+    from_py_object
 )]
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(transparent)]
@@ -953,7 +954,7 @@ impl PreTokenizer for PyPreTokenizerWrapper {
 }
 
 /// PreTokenizers Module
-#[pymodule(gil_used = false)]
+#[pymodule]
 pub mod pre_tokenizers {
     #[pymodule_export]
     pub use super::PyBertPreTokenizer;
