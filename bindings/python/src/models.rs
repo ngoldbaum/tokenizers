@@ -904,7 +904,7 @@ impl PyUnigram {
 }
 
 /// Models Module
-#[pymodule]
+#[pymodule(gil_used = false)]
 pub mod models {
     #[pymodule_export]
     pub use super::PyBPE;

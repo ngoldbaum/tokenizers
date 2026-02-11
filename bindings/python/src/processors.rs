@@ -818,7 +818,7 @@ impl PySequence {
 }
 
 /// Processors Module
-#[pymodule]
+#[pymodule(gil_used = false)]
 pub mod processors {
     #[pymodule_export]
     pub use super::PyBertProcessing;
