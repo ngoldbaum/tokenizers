@@ -46,6 +46,13 @@ jobs:
             ls: dir
             target: x86_64
             python-architecture: x64
+            python-install: |
+                3.10
+                3.11
+                3.12
+                3.13
+                3.14
+                3.14t
             interpreter: 3.10 3.11 3.12 3.13 3.14 3.14t
           - os: windows
             ls: dir
