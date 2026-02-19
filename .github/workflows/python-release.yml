@@ -41,7 +41,7 @@ jobs:
             platform: linux
           - os: windows
             ls: dir
-            interpreter: 3.10 3.11 3.12 3.13 3.14 3.14t pypy3.9 pypy3.10
+            interpreter: 3.10 3.11 3.12 3.13 3.14 3.14t
           - os: windows
             ls: dir
             target: x86_64
@@ -76,7 +76,7 @@ jobs:
               #   interpreter: 3.11 3.12
           - os: macos
             target: aarch64
-            interpreter: 3.10 3.11 3.12 3.13 3.14 3.14t pypy3.10
+            interpreter: 3.10 3.11 3.12 3.13 3.14 3.14t
           - os: ubuntu
             platform: linux
             target: i686
@@ -139,7 +139,7 @@ jobs:
           working-directory: ./bindings/python
           manylinux: ${{ matrix.manylinux || 'auto' }}
           container: ${{ matrix.container }}
-          args: --release --out dist --interpreter ${{ matrix.interpreter || '3.10 3.11 3.12 3.13 3.14 3.14t pypy3.10' }} ${{ matrix.extra-build-args }}
+          args: --release --out dist --interpreter ${{ matrix.interpreter || '3.10 3.11 3.12 3.13 3.14 3.14t' }} ${{ matrix.extra-build-args }}
           rust-toolchain: stable
           docker-options: -e CI
 
