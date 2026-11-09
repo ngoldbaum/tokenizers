@@ -53,6 +53,22 @@ fn ids(text: &str, input: &str) -> Vec<u32> {
         .collect()
 }
 
+#[cfg(all(feature = "wordlevel", feature = "fancy-regex"))]
+#[test]
+fn generic_regex_split_encodes_from_json() {
+    let json = config(&[
+        (
+            "model",
+            r#"{"type": "WordLevel", "unk_token": "<unk>", "vocab": {"a": 0, "b": 1, "<unk>": 2}}"#,
+        ),
+        (
+            "pre_tokenizer",
+            r#"{"type": "Split", "pattern": {"Regex": " +"}, "behavior": "Removed", "invert": false}"#,
+        ),
+    ]);
+    assert_eq!(ids(&json, "a    b"), [0, 1]);
+}
+
 /// `(slot, json, text, ids)`: what a component does to an encode, which is the only thing a caller
 /// can observe. `ab` scoring better than `a`+`a` is what makes the Unigram row a lattice test.
 #[rustfmt::skip]
@@ -254,12 +270,8 @@ fn byte_level_is_a_model_field_not_a_pre_tokenizer() {
     let doc = Json::parse(&json).unwrap();
     let pretok = read_pre_tokenizer(doc.field("pre_tokenizer")).unwrap();
     assert!(matches!(pretok, PipelinePreTokenizer::None));
-    // Where the flag *does* land is the model, which then wants every byte to be an atom. The
-    // four-token vocab above is not one, so this is refused for that reason and no other.
-    assert!(
-        read_err(&json).contains("byte-level vocabulary has no token for bytes"),
-        "not the byte-atom refusal"
-    );
+    assert_eq!(ids(&json, "abab"), vec![3]);
+    assert_eq!(ids(&json, "ab-ab"), vec![3]);
 }
 
 /// One config per decoder variant, so a field rename fails here rather than silently producing a
